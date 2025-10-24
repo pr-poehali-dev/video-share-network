@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -5,6 +6,9 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Switch } from '@/components/ui/switch';
+import { MusicSelector } from './MusicSelector';
+import { MusicTrack } from '@/data/mockData';
+import { Badge } from '@/components/ui/badge';
 
 export const StreamDialog = () => {
   return (
@@ -82,6 +86,9 @@ export const PhotoUploadDialog = () => {
 };
 
 export const VideoUploadDialog = () => {
+  const [selectedMusic, setSelectedMusic] = useState<MusicTrack | null>(null);
+  const [videoDuration, setVideoDuration] = useState<'15' | '30' | '180'>('15');
+
   return (
     <Dialog>
       <DialogTrigger asChild>
@@ -98,6 +105,41 @@ export const VideoUploadDialog = () => {
         </DialogHeader>
         <div className="space-y-4 mt-4">
           <div className="space-y-2">
+            <Label>Длительность видео</Label>
+            <div className="flex gap-2">
+              <Button
+                variant={videoDuration === '15' ? 'default' : 'outline'}
+                onClick={() => setVideoDuration('15')}
+                className={videoDuration === '15' ? 'bg-gradient-to-r from-primary to-secondary' : 'glass-effect border-white/20'}
+              >
+                15 сек
+              </Button>
+              <Button
+                variant={videoDuration === '30' ? 'default' : 'outline'}
+                onClick={() => setVideoDuration('30')}
+                className={videoDuration === '30' ? 'bg-gradient-to-r from-primary to-secondary' : 'glass-effect border-white/20'}
+              >
+                30 сек
+              </Button>
+              <Button
+                variant={videoDuration === '180' ? 'default' : 'outline'}
+                onClick={() => setVideoDuration('180')}
+                className={videoDuration === '180' ? 'bg-gradient-to-r from-primary to-secondary' : 'glass-effect border-white/20'}
+              >
+                3 мин
+              </Button>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <Label>Музыка</Label>
+            <MusicSelector
+              selectedTrack={selectedMusic}
+              onSelectTrack={setSelectedMusic}
+            />
+          </div>
+
+          <div className="space-y-2">
             <Label>Название видео</Label>
             <Input placeholder="Введите название..." className="glass-effect border-white/20" />
           </div>
@@ -108,8 +150,10 @@ export const VideoUploadDialog = () => {
           <div className="border-2 border-dashed border-white/20 rounded-lg p-8 text-center hover:border-primary/50 transition-colors cursor-pointer glass-effect">
             <Icon name="Upload" size={48} className="mx-auto mb-4 text-muted-foreground" />
             <p className="text-sm text-muted-foreground">Перетащите видео сюда или нажмите для выбора</p>
+            <p className="text-xs text-muted-foreground mt-2">Поддерживаются: MP4, MOV (до {videoDuration === '180' ? '500MB' : '100MB'})</p>
           </div>
           <Button className="w-full bg-gradient-to-r from-primary to-secondary">
+            <Icon name="Upload" size={18} className="mr-2" />
             Опубликовать видео
           </Button>
         </div>

@@ -6,6 +6,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Label } from '@/components/ui/label';
 import { Textarea } from '@/components/ui/textarea';
 import { Card } from '@/components/ui/card';
+import { ChatPanel } from './ChatPanel';
 
 type UserProfile = {
   name: string;
@@ -46,7 +47,7 @@ export const Navbar = ({
         <div className="flex items-center justify-between gap-4">
           <div className="flex items-center gap-8">
             <h1 className="text-2xl font-bold bg-gradient-to-r from-primary via-secondary to-accent bg-clip-text text-transparent">
-              VideoHub
+              Фильфам
             </h1>
             
             <div className="hidden md:flex items-center gap-1">
@@ -119,6 +120,8 @@ export const Navbar = ({
                 </div>
               </DialogContent>
             </Dialog>
+
+            <ChatPanel />
 
             <Button variant="ghost" size="icon">
               <Icon name="Bell" size={20} />
